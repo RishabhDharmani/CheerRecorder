@@ -3,10 +3,10 @@
 //////////////////////// Global Variables for Functions /////////////////////////////
 
 var gumStream; 						//stream from getUserMedia()
-var input;							//MediaStreamAudioSourceNode we'll be recording
+var input;						//MediaStreamAudioSourceNode we'll be recording
 var bufferLength;					//Number of frequency bins
 var dataArray = [];					//Stores all the frequency data of all frames 					
-var pause;							//Start and stop audio frame collection
+var pause;						//Start and stop audio frame collection
 var jsonStoring;					//Store and send as JSON object
 var websocket;						// Variable for websocket connection
 

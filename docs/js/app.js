@@ -34,16 +34,16 @@ pauseButton.addEventListener("click", pauseRecording);
 function startRecording() {
 
 	console.log("recordButton clicked");
+    
+    	//Simple constraints object
+	var constraints = { audio: true, video:false }
 
-	//Simple constraints object
-    var constraints = { audio: true, video:false }
-
-    //Disable the record button until we get a success or fail from getUserMedia()
+    	//Disable the record button until we get a success or fail from getUserMedia()
 	recordButton.disabled = true;
 	stopButton.disabled = false;
 	pauseButton.disabled = false;
 
-    //Using the standard promise based getUserMedia()
+    	//Using the standard promise based getUserMedia()
 	navigator.mediaDevices.getUserMedia(constraints).then(function(stream) {
 
 		console.log("getUserMedia() success");
@@ -59,7 +59,7 @@ function startRecording() {
 		gumStream = stream;
 
 		//define variable as a websocket
-		websocket = new WebSocket("ws://localhost:3030");
+		websocket = new WebSocket("wss://localhost:3030");
 
 		//use the stream
 		input = audioContext.createMediaStreamSource(stream);

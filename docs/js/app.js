@@ -8,7 +8,7 @@ var bufferLength;					//Number of frequency bins
 var dataArray = [];					//Stores all the frequency data of all frames 					
 var pause;							//Start and stop audio frame collection
 var jsonStoring;					//Store and send as JSON object
-var websocket;
+var websocket;						// Variable for websocket connection
 
 
 ////////////////////////// AudioContext variables //////////////////////////////////
@@ -58,6 +58,7 @@ function startRecording() {
 		//assign to gumStream for later use
 		gumStream = stream;
 
+		//define variable as a websocket
 		websocket = new WebSocket("ws://localhost:3030");
 
 		//use the stream
@@ -100,14 +101,15 @@ function frameLooper(){
 	fbc_array = new Uint8Array(analyser.frequencyBinCount);
 	analyser.getByteFrequencyData(fbc_array);
 
+	//check if websocket is connected
 	if (websocket.readyState === WebSocket.OPEN){
-      	console.log("Connection established");
+
+      	//sending each audio frame array as a buffer through websockets
 		websocket.send(fbc_array.buffer);
    }
 
 	//creating the visualizer
 	visualizer(fbc_array);
-	
 }
 
 ////////////////////// Pause and Resume function /////////////////////////////////
@@ -120,7 +122,7 @@ function pauseRecording(){
 		pause = true;
 	}
 	else{
-
+		//resume
 		pauseButton.innerHTML="Pause";
 		pause= false;
 		frameLooper();
@@ -147,9 +149,11 @@ function stopRecording() {
 	//stop microphone access
 	gumStream.getAudioTracks()[0].stop();
 
+	//close the websocket connection
 	if (websocket.readyState === WebSocket.OPEN){
-      websocket.close( );
-      console.log("Websocket Closed");
+
+    	websocket.close( );
+    	console.log("Websocket Closed");
    }
 }
 

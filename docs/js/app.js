@@ -59,7 +59,7 @@ function startRecording() {
 		gumStream = stream;
 
 		//define variable as a websocket
-		websocket = new WebSocket("wss://localhost:3030");
+		websocket = new WebSocket("wss://localhost:8000");
 
 		//use the stream
 		input = audioContext.createMediaStreamSource(stream);
